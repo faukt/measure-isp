@@ -1,5 +1,6 @@
 import glob
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import re
 import json
@@ -37,9 +38,16 @@ def main():
     try:
         parseLogFiles('./logs/')
 
-        df = pd.read_csv('./logs/2020-06-11.log.csv')
+        filenames = glob.glob('./logs/*.csv')
+        fig = make_subplots(rows=2, cols=1)
+        for filename in filenames:
+            df = pd.read_csv(filename)
 
-        fig = px.line(df, x='datetime', y='download', title='SPEEDTEST - {}'.format(VENDOR))
+            df_long = pd.melt(df, id_vars=['datetime'],
+                              value_vars=['download', 'upload', 'ping'])
+
+            fig = px.line(df_long, x='datetime', y='value', color='variable',
+                          title='SPEEDTEST - {} - {}'.format(VENDOR, filename))
 
         fig.show()
 

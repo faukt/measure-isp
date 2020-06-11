@@ -28,3 +28,4 @@ pip-log.txt
 
 #pycharm ide files
 .idea
+*.log

@@ -48,7 +48,7 @@ def main():
             fig = px.line(df_long, x='datetime', y='value', color='variable',
                           title='SPEEDTEST - {}'.format(VENDOR))
 
-            fig.show()
+            fig.write_html('.{}.html'.format(filename.split('.')[1]))
 
     except Exception as Ex:
         print('Exception: %s' % str(Ex))

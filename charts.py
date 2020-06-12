@@ -39,7 +39,6 @@ def main():
         parseLogFiles('./logs/')
 
         filenames = glob.glob('./logs/*.csv')
-        fig = make_subplots(rows=2, cols=1)
         for filename in filenames:
             df = pd.read_csv(filename)
 
@@ -47,9 +46,9 @@ def main():
                               value_vars=['download', 'upload', 'ping'])
 
             fig = px.line(df_long, x='datetime', y='value', color='variable',
-                          title='SPEEDTEST - {} - {}'.format(VENDOR, filename))
+                          title='SPEEDTEST - {}'.format(VENDOR))
 
-        fig.show()
+            fig.show()
 
     except Exception as Ex:
         print('Exception: %s' % str(Ex))

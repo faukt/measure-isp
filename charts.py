@@ -1,5 +1,6 @@
 import glob
 import plotly.express as px
+import plotly.graph_objects as go
 import pandas as pd
 import re
 import json
@@ -52,7 +53,17 @@ def main():
             fig = px.line(df_long, x='datetime', y='value', color='variable',
                           title='SPEEDTEST - {}'.format(VENDOR))
 
+            for figData in fig.data:
+                if figData.name == 'ping':
+                    figData.name += ' [s]'
+                else:
+                    figData.name += ' [MBit/s]'
+
+            fig.update_traces(mode="markers+lines", hovertemplate=None)
+            fig.update_layout(hovermode="x unified", hoverlabel=dict(namelength=-1))
+
             fig.write_html('.{}.html'.format(filename.split('.')[1]))
+        # fig.show()
 
     except Exception as Ex:
         print('Exception: %s' % str(Ex))

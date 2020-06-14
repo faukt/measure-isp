@@ -55,7 +55,7 @@ def main():
 
             for figData in fig.data:
                 if figData.name == 'ping':
-                    figData.name += ' [s]'
+                    figData.name += ' [ms]'
                 else:
                     figData.name += ' [MBit/s]'
 
